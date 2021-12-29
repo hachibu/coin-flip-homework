@@ -1,6 +1,7 @@
-import pandas as pd
-import random
 from jinja2 import Template
+import pandas as pd
+import plotly.express as px
+import random
 
 def run_trial(n_flips):
     data = []
@@ -18,7 +19,14 @@ def run_trials(n_trials, n_flips):
         data.append((n, df.iloc[-1, 1]))
     return pd.DataFrame(data, columns = ['x', 'y'])
 
+def gen_chart_html(title, df):
+    fig = px.line(df, x="x", y="y", title=title)
+    filepath = "docs/{}.html".format(title)
+    fig.write_html(filepath)
+    print("generated \"{}\"".format(filepath))
+
 def gen_index_html(titles):
+    filepath = "docs/index.html"
     template = Template("""
 <!DOCTYPE html>
 <html>
@@ -34,5 +42,6 @@ def gen_index_html(titles):
 </body>
 </html>
     """)
-    template.stream(titles=titles).dump("docs/index.html")
+    template.stream(titles=titles).dump(filepath)
+    print("generated \"{}\"".format(filepath))
 
