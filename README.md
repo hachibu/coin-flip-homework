@@ -1,8 +1,6 @@
 # Coin Flip Homework
 
-## Run trials and generate HTML charts
-```
-python3 main.py
-open docs/index.html
-```
+Learning statistics by simulating coin flips. [Click here to view the HTML charts](https://hachibu.github.io/coin-flip-homework).
+
+To rerun the trails and regenerate the HTML charts, run the command `python3 main.py`.
 
