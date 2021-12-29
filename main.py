@@ -1,6 +1,5 @@
 import plotly.express as px
-from util import run_trial, run_trials
-from jinja2 import Template
+from util import run_trial, run_trials, gen_index_html
 
 titles = []
 trials = (
@@ -25,18 +24,5 @@ for (x, y, z) in experiments:
     fig = px.line(run_trials(y, z), x="x", y="y", title=title)
     fig.write_html("docs/{}.html".format(title))
 
-template = Template("""
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Coin Flip Homework</title>
-</head>
-<body>
-    {% for title in titles %}
-        <li><a href="{{ title | urlencode }}.html">{{ title }}</a></li>
-    {% endfor %}
-</body>
-</html>
-""")
-template.stream(titles=titles).dump("docs/index.html")
+gen_index_html(titles)
 

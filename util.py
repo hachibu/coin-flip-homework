@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+from jinja2 import Template
 
 def run_trial(n_flips):
     data = []
@@ -16,4 +17,22 @@ def run_trials(n_trials, n_flips):
         df = run_trial(n_flips)
         data.append((n, df.iloc[-1, 1]))
     return pd.DataFrame(data, columns = ['x', 'y'])
+
+def gen_index_html(titles):
+    template = Template("""
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coin Flip Homework</title>
+</head>
+<body>
+    <ul>
+        {% for title in titles %}
+            <li><a href="{{ title | urlencode }}.html">{{ title }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+    """)
+    template.stream(titles=titles).dump("docs/index.html")
 
