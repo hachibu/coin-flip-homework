@@ -1,26 +1,17 @@
+from jinja2 import Environment, FileSystemLoader
 import os
-from jinja2 import Template
 
-template = Template("""
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Coin Flip Homework</title>
-</head>
-<body>
-    <ul>
-        {% for file in files %}
-            <li><a href="{{ file | urlencode }}">{{ file }}</a></li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
-""")
+template_path = "{}/templates".format(os.path.abspath(os.path.dirname(__file__)))
+env = Environment(loader=FileSystemLoader(template_path))
+template = env.get_template('index.html')
+docs_path = "docs"
+index_html_path = "{}/index.html".format(docs_path)
+html_files = []
 
-index_html_path = "docs/index.html"
-html_files = list(filter(
-    lambda path: path.endswith('.html') and path != 'index.html',
-    os.listdir("docs")))
+for path in os.listdir(docs_path):
+    if path.endswith('.html') and path != 'index.html':
+        html_files.append(path)
+
 html_files.sort()
 
 template.stream(files=html_files).dump(index_html_path)

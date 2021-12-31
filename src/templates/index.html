@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Coin Flip Homework</title>
+</head>
+<body>
+    <ul>
+        {% for file in files %}
+            <li><a href="{{ file | urlencode }}">{{ file }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
