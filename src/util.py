@@ -5,7 +5,7 @@ import random
 
 def build_chart_html(dataframe, title, xaxes_range = None):
     path = "docs/{}.html".format(title)
-    fig = px.line(dataframe, x="x", y="y", title=title)
+    fig = px.bar(dataframe, x="x", y="y", title=title)
     if xaxes_range is not None:
         fig.update_xaxes(range=xaxes_range)
     fig.write_html(path)
