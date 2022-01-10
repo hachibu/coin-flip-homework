@@ -1,4 +1,5 @@
-from util import run_experiment, build_chart_html
+from util import run_experiment
+import plotly.express as px
 
 experiments = [
     (1000, 10),
@@ -10,8 +11,10 @@ experiments = [
 ]
 
 for i, (n, m) in enumerate(experiments):
-    build_chart_html(
-        run_experiment(n, m),
-        "experiment-{}-{}-trials-of-{}-flips".format(i, n, m),
-        [0, 1])
+    df = run_experiment(n, m)
+    title = "experiment-{}-{}-trials-of-{}-flips".format(i, n, m)
+    path = "docs/{}.html".format(title)
+    fig = px.bar(df, title=title, x = "# heads", y = "% observed")
+    fig.write_html(path)
+    print("generated \"{}\"".format(path))
 
